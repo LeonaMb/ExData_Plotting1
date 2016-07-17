@@ -1,6 +1,10 @@
+#Load data (only records for the 2 days)
+
 rawdata <-  read.csv("Exploratory Graph/household_power_consumption.txt", sep=";", stringsAsFactors = FALSE)
 powerdata <- rawdata[rawdata[,1]=="1/2/2007" | rawdata[,1]=="2/2/2007",]
 
+
+#Prepare subset of data required for the plot
 x <- strptime(paste(powerdata[,"Date"],powerdata[,"Time"]), format="%d/%m/%Y %H:%M:%S")
 
 y <- as.numeric(powerdata[,"Global_active_power"])
@@ -11,12 +15,16 @@ v <- as.numeric(powerdata[,"Voltage"])
 w <- as.numeric(powerdata[,"Global_reactive_power"])
 
 
+#Open png and plot
 png(filename = "Rplot4.png", width = 480, height = 480, units = "px")
 
+#Change parameters to display 4 plots (2 by 2) and margins for better display
 par(mfrow=c(2,2), mar=c(4, 4, 1, 1))
-#c(5, 4, 4, 2) + 0.1
+
+#plots (in this order top left, top right, bottom left, bottom right) 
 
 plot(x,y, type="l", xlab="", ylab="Global Active Power")
+
 plot(x,v, type="l", xlab="datetime", ylab="Voltage")
 
 plot(x,z1, type="l", xlab="", ylab = "Energy sub metering")
